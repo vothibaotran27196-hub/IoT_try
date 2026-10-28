@@ -1,15 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Web App</title>
+
+    <title>DHT11 Environmental Monitor</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <h1>Hello World!</h1>
-    <p>This page is being served by my Express server.</p>
-</body>
 
+    <div class="container">
+
+        <h1>DHT11 Environmental Monitor</h1>
+
+        <div class="dashboard">
+
+            <div class="card">
+                <h2>Temperature</h2>
+                <p>
+                    <span id="temperature">--</span> °C
+                </p>
+            </div>
+
+            <div class="card">
+                <h2>Humidity</h2>
+                <p>
+                    <span id="humidity">--</span> %
+                </p>
+            </div>
+
+            <div class="card">
+                <h2>Time</h2>
+                <p id="time">--</p>
+            </div>
+
+            <div class="card">
+                <h2>Location</h2>
+                <p id="location">--</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
 </html>

@@ -12,6 +12,16 @@ app.get("/", (req, res) => {
 */
 
 app.use(express.static(path.join(__dirname, "public")));
+
+app.get("/api/sensor", (req, res) => {
+    res.json({
+        temperature: 25,
+        humidity: 40,
+        timestamp: new Date().toLocaleString(),
+        location: "Here"
+    });
+});
+
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
