@@ -3,49 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>DHT11 Environmental Monitor 1</title>
-
+    <meta name="theme-color" content="#f4f7fb">
+    <title>Environmental Monitor</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
-    <div class="container">
-
-        <h1>DHT11 Environmental Monitor</h1>
-
-        <div class="dashboard">
-
-            <div class="card">
-                <h2>Temperature</h2>
-                <p>
-                    <span id="temperature">--</span> °C
-                </p>
+    <main class="page">
+        <header class="page-header">
+            <div>
+                <p class="eyebrow">ENVIRONMENTAL MONITOR</p>
+                <h1>Sensor dashboard</h1>
+                <p class="subtitle">Live conditions and readings over time</p>
             </div>
+            <span class="demo-badge"><span class="demo-dot"></span> Demo data</span>
+        </header>
 
-            <div class="card">
-                <h2>Humidity</h2>
-                <p>
-                    <span id="humidity">--</span> %
-                </p>
+        <p id="error-message" class="error-message" role="alert" hidden></p>
+
+        <section class="metrics" aria-label="Current sensor readings">
+            <article class="metric-card temperature-card">
+                <div class="metric-heading">
+                    <span class="metric-icon temperature-icon" aria-hidden="true">°</span>
+                    <h2>Temperature</h2>
+                </div>
+                <p class="metric-value"><span id="temperature">--</span><span class="metric-unit">°C</span></p>
+                <p class="metric-footnote">Alarm threshold: 40°C</p>
+            </article>
+
+            <article class="metric-card humidity-card">
+                <div class="metric-heading">
+                    <span class="metric-icon humidity-icon" aria-hidden="true">%</span>
+                    <h2>Humidity</h2>
+                </div>
+                <p class="metric-value"><span id="humidity">--</span><span class="metric-unit">%</span></p>
+                <p class="metric-footnote">Relative humidity</p>
+            </article>
+
+            <article class="metric-card">
+                <div class="metric-heading">
+                    <span class="metric-icon time-icon" aria-hidden="true">◷</span>
+                    <h2>Last reading</h2>
+                </div>
+                <p id="time" class="metric-info">Waiting for data</p>
+                <p class="metric-footnote">Updated every 2 minutes</p>
+            </article>
+
+            <article class="metric-card">
+                <div class="metric-heading">
+                    <span class="metric-icon location-icon" aria-hidden="true">⌖</span>
+                    <h2>Location</h2>
+                </div>
+                <p id="location" class="metric-info">--</p>
+                <p class="metric-footnote">Sensor location</p>
+            </article>
+        </section>
+
+        <section class="panel chart-panel" aria-labelledby="history-heading">
+            <div class="panel-heading chart-heading">
+                <div>
+                    <p class="eyebrow">HISTORY</p>
+                    <h2 id="history-heading">Temperature &amp; humidity</h2>
+                </div>
+                <form id="range-form" class="range-form">
+                    <label>
+                        <span>From</span>
+                        <input id="range-from" type="datetime-local" required>
+                    </label>
+                    <label>
+                        <span>To</span>
+                        <input id="range-to" type="datetime-local" required>
+                    </label>
+                    <button class="button button-secondary" type="submit">Show range</button>
+                </form>
             </div>
-
-            <div class="card">
-                <h2>Time</h2>
-                <p id="time">--</p>
+            <div class="chart-legend" aria-label="Chart legend">
+                <span><i class="legend-line temperature-line"></i>Temperature (°C)</span>
+                <span><i class="legend-line humidity-line"></i>Humidity (%)</span>
             </div>
-
-            <div class="card">
-                <h2>Location</h2>
-                <p id="location">--</p>
+            <div class="chart-wrap">
+                <canvas id="history-chart" role="img" aria-label="Temperature and humidity history chart"></canvas>
+                <p id="chart-empty" class="chart-empty" hidden>No readings found in this time range.</p>
             </div>
+            <p class="chart-note">Demo history is generated for the last 6 hours. New readings are kept in memory for up to 7 days and are cleared when the server restarts.</p>
+        </section>
 
-        </div>
+        <section class="panel alarm-panel" aria-labelledby="alarm-heading">
+            <div>
+                <p class="eyebrow">ALARM SYSTEM</p>
+                <h2 id="alarm-heading">Temperature alert</h2>
+                <p id="alarm-message" class="alarm-message" aria-live="polite">Waiting for sensor data</p>
+            </div>
+            <div class="alarm-controls">
+                <div class="indicator">
+                    <span id="led-indicator" class="indicator-light" aria-hidden="true"></span>
+                    <span>LED <strong id="led-status">Off</strong></span>
+                </div>
+                <div class="indicator">
+                    <span id="buzzer-indicator" class="indicator-light" aria-hidden="true"></span>
+                    <span>Buzzer <strong id="buzzer-status">Off</strong></span>
+                </div>
+                <button id="mute-button" class="button button-danger" type="button" disabled>Silence buzzer</button>
+            </div>
+            <p class="alarm-note">At 40°C the simulated LED and buzzer turn on. At 35°C or below, both turn off. Silencing the buzzer keeps the LED on until the temperature falls to 35°C.</p>
+        </section>
 
-    </div>
-
+        <footer class="page-footer">Location: <span id="footer-location">--</span> <span aria-hidden="true">·</span> Simulation only — no physical LED or buzzer is connected.</footer>
+    </main>
     <script src="script.js"></script>
-
 </body>
 </html>
